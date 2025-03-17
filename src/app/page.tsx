@@ -3,7 +3,7 @@ export default function Home() {
     <div>
       <div>そのアイデア、被ってない？</div>
       <input type="text" />
-      <div>Let's check it!!</div>
+      <div>Let&apos;s check it!!</div>
     </div>
   );
 }
