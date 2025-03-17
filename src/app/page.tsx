@@ -17,10 +17,6 @@ export default function Home() {
       <button className="text-3xl text-teal-600 font-semibold tracking-wide">
         Let&apos;s check it!!
       </button>
-
-      <div className="font-my-font">
-        text
-      </div>
     </div>
   );
 }
