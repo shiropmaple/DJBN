@@ -16,8 +16,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen gap-5 items-center justify-center bg-gradient-to-br from-[#84E53E] to-[#23BD99]">
-      <h3 className="grandstander text-4xl">Result</h3>
-      <div className="w-4/5 h-1/2 bg-white overflow-y-scroll p-4 border border-gray-300 rounded-lg shadow-md">
+      <h3 className="grandstander text-4xl">RESULT</h3>
+      <div className="w-4/5 max-w-[1200px] h-[250px] bg-white overflow-y-scroll p-4 border border-gray-300 rounded-2xl shadow-md">
         {result.length > 0 ? (
           <ul>
             {result.map((app, index) => (
