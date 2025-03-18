@@ -2,9 +2,13 @@
 @import "tailwindcss";
 
 body {
-  font-family: "Amatic SC", "Kiwi Maru", "Caveat", serif;
+  font-family: "Kiwi Maru", "Grandstander", "Caveat", serif;
 }
 
 .caveat {
   font-family: "Caveat", sans-serif;
+}
+
+.grandstander {
+  font-family: "Grandstander", cursive;
 }

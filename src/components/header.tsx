@@ -5,9 +5,14 @@ import React from "react";
 
 const Header = () => {
   return (
-    <Link href={"/"} className="fixed p-6 text-5xl text-black cursor-pointer">
-      DEJABUN
-    </Link>
+    <div className="w-full h-[70px] flex justify-center items-center">
+      <Link
+        className="w-full h-full max-w-[1200px] justify-start p-5 text-4xl grandstander"
+        href={"/"}
+      >
+        DEJABUN
+      </Link>
+    </div>
   );
 };
 
