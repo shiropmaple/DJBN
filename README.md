@@ -4,7 +4,8 @@
 本リポジトリではフロントエンドを実装しています。
 
 # リンク
-- [Page Link](https://djbn.vercel.app/)  
+- [Page Link](https://djbn.vercel.app/)
+- [Backend Repositories](https://github.com/umiyuri777/DJBN-server)
 - [Figma](https://www.figma.com/design/9vIOKhWWfA2Lcvf9Fg3vFT/%E9%A7%86%E3%81%91%E5%87%BA%E3%81%97%E3%83%8F%E3%83%B3%E3%82%BF%E3%83%BC?node-id=0-1&p=f&t=2sG9FZXZxNcJYV19-0)
 
 # 使用技術
