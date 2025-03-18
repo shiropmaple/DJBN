@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#84E53E] to-[#23BD99]">
@@ -10,7 +12,9 @@ export default function Home() {
           className="w-full h-full"
           placeholder="アイデアを入力..."
         />
-        <button className="w-1/10 h-full text-2xl">🔍</button>
+        <button className="w-1/10 h-full text-2xl">
+          <Link href="/result">🔍</Link>
+        </button>
       </div>
       <button className="caveat text-8xl pt-5 text-[#1A9A79] transform rotate-[-5deg]">
         Let&apos;s check it!!

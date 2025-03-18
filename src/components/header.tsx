@@ -1,19 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <div
-      onClick={scrollToTop}
-      className="fixed p-6 text-5xl text-black cursor-pointer"
-    >
+    <Link href={"/"} className="fixed p-6 text-5xl text-black cursor-pointer">
       DEJABUN
-    </div>
+    </Link>
   );
 };
 
