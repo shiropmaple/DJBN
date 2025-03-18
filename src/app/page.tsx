@@ -1,20 +1,18 @@
-import "./globals.css";
-
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-green-300 to-lime-300">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8 tracking-wide">
-        DEJABUN
-      </h1>
-      <div className="text-2xl text-gray-700 mb-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-[#84E53E] to-[#23BD99]">
+      <div className="kiwi-maru text-2xl text-white m-6">
         そのアイデア、被ってない？
       </div>
-      <input
-        type="text"
-        className="w-80 h-12 bg-white rounded-full px-6 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-8"
-        placeholder="アイデアを入力..."
-      />
-      <button className="text-3xl text-teal-600 font-semibold tracking-wide">
+      <div className="flex caveat w-96 h-15 bg-white rounded-full px-6 mb-8">
+        <input
+          type="text"
+          className="w-full h-full"
+          placeholder="アイデアを入力..."
+        />
+        <button className="w-1/10 h-full text-2xl">🔍</button>
+      </div>
+      <button className="caveat text-8xl pt-5 text-[#1A9A79] transform rotate-[-5deg]">
         Let&apos;s check it!!
       </button>
     </div>

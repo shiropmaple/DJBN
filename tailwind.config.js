@@ -1,12 +1,14 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  // ...
   theme: {
     extend: {
       fontFamily: {
-        "my-font": ["Amatic SC", "Caveat", "Kiwi Maru", "serif"],
+        "kiwi-maru": ["Kiwi Maru", "sans-serif"],
+        "amatic-sc": ["Amatic SC", "sans-serif"],
+        caveat: ["Caveat", "sans-serif"],
       },
     },
   },
-  plugins: [],
+  // ...
 };
