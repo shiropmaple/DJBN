@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [ideaText, setIdeaText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSearch = async () => {
     if (!ideaText.trim()) return;
     setLoading(true);
-    setResult(null);
 
     try {
       const response = await fetch("https://djbn-server.onrender.com/search", {
@@ -20,9 +20,19 @@ export default function Home() {
         },
         body: JSON.stringify({ prompt: ideaText }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTPエラー: ${response.status}`);
+      }
+
       const jsondata = await response.json();
       console.log("レスポンスデータ:", jsondata);
-      setResult(jsondata);
+
+      // sessionStorage にデータを保存
+      sessionStorage.setItem("searchResult", JSON.stringify(jsondata));
+
+      // ページ遷移
+      router.push("/result");
     } catch (error) {
       console.error("APIリクエストに失敗:", error);
     } finally {
@@ -31,10 +41,7 @@ export default function Home() {
   };
 
   return (
-    <div
-      className="flex flex-col items-center justify-center bg-gradient-to-br from-[#84E53E] to-[#23BD99]"
-      style={{ height: "calc(100vh - 70px)" }}
-    >
+    <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-br from-[#84E53E] to-[#23BD99]">
       {loading ? (
         <div className="flex justify-center" aria-label="読み込み中">
           <div className="animate-spin h-8 w-8 bg-white rounded-xl"></div>
@@ -47,10 +54,15 @@ export default function Home() {
           <div className="flex kiwi-maru w-96 h-15 bg-white rounded-full px-6 mb-8">
             <input
               type="text"
-              className="w-full h-full"
+              className="w-full h-full focus:outline-none focus:none"
               placeholder="アイデアを入力..."
               value={ideaText}
               onChange={(e) => setIdeaText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
             />
             <button onClick={handleSearch} className="w-1/10 h-full text-2xl">
               <div>🔍</div>
