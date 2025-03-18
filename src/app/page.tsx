@@ -18,12 +18,11 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ideaText }),
+        body: JSON.stringify({ prompt: ideaText }),
       });
-      const data = await response.json();
-      setResult(data.result);
-      console.log(result);
-      console.log(data.result);
+      const jsondata = await response.json();
+      console.log("レスポンスデータ:", jsondata);
+      setResult(jsondata);
     } catch (error) {
       console.error("APIリクエストに失敗:", error);
     } finally {
