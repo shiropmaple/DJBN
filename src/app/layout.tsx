@@ -21,6 +21,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
+          href="//fonts.googleapis.com/css?family=Lato:900,400"
+          rel="stylesheet"
+          type="text/css"
+        />
+        <link
           href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Caveat&family=Grandstander:wght@500&family=Kiwi+Maru&display=swap"
           rel="stylesheet"
         />
