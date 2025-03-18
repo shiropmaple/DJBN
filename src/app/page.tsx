@@ -7,6 +7,7 @@ export default function Home() {
   const [ideaText, setIdeaText] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [isComposing, setIsComposing] = useState(false);
 
   const handleSearch = async () => {
     if (!ideaText.trim()) return;
@@ -20,18 +21,12 @@ export default function Home() {
         },
         body: JSON.stringify({ prompt: ideaText }),
       });
-
       if (!response.ok) {
         throw new Error(`HTTPエラー: ${response.status}`);
       }
-
       const jsondata = await response.json();
       console.log("レスポンスデータ:", jsondata);
-
-      // sessionStorage にデータを保存
       sessionStorage.setItem("searchResult", JSON.stringify(jsondata));
-
-      // ページ遷移
       router.push("/result");
     } catch (error) {
       console.error("APIリクエストに失敗:", error);
@@ -58,8 +53,11 @@ export default function Home() {
               placeholder="アイデアを入力..."
               value={ideaText}
               onChange={(e) => setIdeaText(e.target.value)}
+              onCompositionStart={() => setIsComposing(true)}
+              onCompositionEnd={() => setIsComposing(false)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === "Enter" && !isComposing) {
+                  e.preventDefault();
                   handleSearch();
                 }
               }}
