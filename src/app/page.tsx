@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -9,24 +9,63 @@ export default function Home() {
   const router = useRouter();
   const [isComposing, setIsComposing] = useState(false);
 
+  useEffect(() => {
+    // Resultページで選択した類義語を取得
+    const selectedSynonym = sessionStorage.getItem("selectedSynonym");
+    if (selectedSynonym) {
+      setIdeaText((prev) =>
+        prev ? `${prev} ${selectedSynonym}` : selectedSynonym
+      );
+      sessionStorage.removeItem("selectedSynonym");
+      handleSearch();
+    }
+  }, []);
+
   const handleSearch = async () => {
     if (!ideaText.trim()) return;
     setLoading(true);
 
     try {
-      const response = await fetch("https://djbn-server.onrender.com/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt: ideaText }),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTPエラー: ${response.status}`);
+      // search API
+      const searchResponse = await fetch(
+        "https://djbn-server.onrender.com/search",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: ideaText }),
+        }
+      );
+
+      if (!searchResponse.ok) {
+        throw new Error(`HTTPエラー: ${searchResponse.status}`);
       }
-      const jsondata = await response.json();
-      console.log("レスポンスデータ:", jsondata);
-      sessionStorage.setItem("searchResult", JSON.stringify(jsondata));
+
+      const searchData = await searchResponse.json();
+      console.log("検索結果:", searchData);
+      sessionStorage.setItem("searchResult", JSON.stringify(searchData));
+
+      // synonyms API
+      const synonymsResponse = await fetch(
+        "https://djbn-server.onrender.com/synonyms",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: ideaText }),
+        }
+      );
+
+      if (!synonymsResponse.ok) {
+        throw new Error(`HTTPエラー: ${synonymsResponse.status}`);
+      }
+
+      const synonymsData = await synonymsResponse.json();
+      console.log("類義語:", synonymsData);
+      sessionStorage.setItem("synonymsResult", JSON.stringify(synonymsData));
+
       router.push("/result");
     } catch (error) {
       console.error("APIリクエストに失敗:", error);
