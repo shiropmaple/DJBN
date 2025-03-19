@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 
-export default function Home() {
+export default function Loading() {
   return (
     <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-br from-green-400 to-teal-500 pt-16">
       {/* 背景のグラデーションアニメーション */}

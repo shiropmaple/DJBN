@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/loading";
 
 export default function Home() {
   const [ideaText, setIdeaText] = useState("");
@@ -36,41 +37,41 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-br from-[#84E53E] to-[#23BD99]">
+    <>
       {loading ? (
-        <div className="flex justify-center" aria-label="読み込み中">
-          <div className="animate-spin h-8 w-8 bg-white rounded-xl"></div>
-        </div>
+        <Loading></Loading>
       ) : (
-        <>
-          <div className="kiwi-maru text-2xl text-white m-6">
-            そのアイデア、被ってない？
-          </div>
-          <div className="flex kiwi-maru w-96 h-15 bg-white rounded-full px-6 mb-8">
-            <input
-              type="text"
-              className="w-full h-full focus:outline-none focus:none"
-              placeholder="アイデアを入力..."
-              value={ideaText}
-              onChange={(e) => setIdeaText(e.target.value)}
-              onCompositionStart={() => setIsComposing(true)}
-              onCompositionEnd={() => setIsComposing(false)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !isComposing) {
-                  e.preventDefault();
-                  handleSearch();
-                }
-              }}
-            />
-            <button onClick={handleSearch} className="w-1/10 h-full text-2xl">
-              <div>🔍</div>
+        <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-br from-[#84E53E] to-[#23BD99]">
+          <>
+            <div className="kiwi-maru text-2xl text-white m-6">
+              そのアイデア、被ってない？
+            </div>
+            <div className="flex kiwi-maru w-96 h-15 bg-white rounded-full px-6 mb-8">
+              <input
+                type="text"
+                className="w-full h-full focus:outline-none focus:none"
+                placeholder="アイデアを入力..."
+                value={ideaText}
+                onChange={(e) => setIdeaText(e.target.value)}
+                onCompositionStart={() => setIsComposing(true)}
+                onCompositionEnd={() => setIsComposing(false)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !isComposing) {
+                    e.preventDefault();
+                    handleSearch();
+                  }
+                }}
+              />
+              <button onClick={handleSearch} className="w-1/10 h-full text-2xl">
+                <div>🔍</div>
+              </button>
+            </div>
+            <button className="caveat text-8xl pt-5 text-[#1A9A79] transform rotate-[-5deg]">
+              Let&apos;s check it!!
             </button>
-          </div>
-          <button className="caveat text-8xl pt-5 text-[#1A9A79] transform rotate-[-5deg]">
-            Let&apos;s check it!!
-          </button>
-        </>
+          </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
