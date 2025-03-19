@@ -11,14 +11,14 @@ export default function Home() {
   const [isComposing, setIsComposing] = useState(false);
 
   useEffect(() => {
-    // Resultページで選択した類義語を取得
-    const selectedSynonym = sessionStorage.getItem("selectedSynonym");
-    if (selectedSynonym) {
+    // Result ページで選択した類義語を取得
+    const storedSynonyms = sessionStorage.getItem("selectedSynonyms");
+    if (storedSynonyms) {
+      const synonyms = JSON.parse(storedSynonyms);
       setIdeaText((prev) =>
-        prev ? `${prev} ${selectedSynonym}` : selectedSynonym
+        prev ? `${prev} ${synonyms.join(" ")}` : synonyms.join(" ")
       );
-      sessionStorage.removeItem("selectedSynonym");
-      handleSearch();
+      sessionStorage.removeItem("selectedSynonyms");
     }
   }, []);
 
@@ -27,7 +27,7 @@ export default function Home() {
     setLoading(true);
 
     try {
-      // search API
+      // api から search の結果を取得
       const searchResponse = await fetch(
         "https://djbn-server.onrender.com/search",
         {
@@ -44,10 +44,9 @@ export default function Home() {
       }
 
       const searchData = await searchResponse.json();
-      console.log("検索結果:", searchData);
       sessionStorage.setItem("searchResult", JSON.stringify(searchData));
 
-      // synonyms API
+      // api から synonyms の結果を取得
       const synonymsResponse = await fetch(
         "https://djbn-server.onrender.com/synonyms",
         {
@@ -64,7 +63,6 @@ export default function Home() {
       }
 
       const synonymsData = await synonymsResponse.json();
-      console.log("類義語:", synonymsData);
       sessionStorage.setItem("synonymsResult", JSON.stringify(synonymsData));
 
       router.push("/result");
@@ -78,37 +76,35 @@ export default function Home() {
   return (
     <>
       {loading ? (
-        <Loading></Loading>
+        <Loading />
       ) : (
         <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-br from-[#84E53E] to-[#23BD99]">
-          <>
-            <div className="kiwi-maru text-2xl text-white m-6">
-              そのアイデア、被ってない？
-            </div>
-            <div className="flex kiwi-maru w-96 h-15 bg-white rounded-full px-6 mb-8">
-              <input
-                type="text"
-                className="w-full h-full focus:outline-none focus:none"
-                placeholder="アイデアを入力..."
-                value={ideaText}
-                onChange={(e) => setIdeaText(e.target.value)}
-                onCompositionStart={() => setIsComposing(true)}
-                onCompositionEnd={() => setIsComposing(false)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !isComposing) {
-                    e.preventDefault();
-                    handleSearch();
-                  }
-                }}
-              />
-              <button onClick={handleSearch} className="w-1/10 h-full text-2xl">
-                <div>🔍</div>
-              </button>
-            </div>
-            <button className="caveat text-8xl pt-5 text-[#1A9A79] transform rotate-[-5deg]">
-              Let&apos;s check it!!
+          <div className="kiwi-maru text-2xl text-white m-6">
+            そのアイデア、被ってない？
+          </div>
+          <div className="flex kiwi-maru w-96 h-15 bg-white rounded-full px-6 mb-8">
+            <input
+              type="text"
+              className="w-full h-full focus:outline-none"
+              placeholder="アイデアを入力..."
+              value={ideaText}
+              onChange={(e) => setIdeaText(e.target.value)}
+              onCompositionStart={() => setIsComposing(true)}
+              onCompositionEnd={() => setIsComposing(false)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !isComposing) {
+                  e.preventDefault();
+                  handleSearch();
+                }
+              }}
+            />
+            <button onClick={handleSearch} className="w-1/10 h-full text-2xl">
+              <div>🔍</div>
             </button>
-          </>
+          </div>
+          <button className="caveat text-8xl pt-5 text-[#1A9A79] transform rotate-[-5deg]">
+            Let&apos;s check it!!
+          </button>
         </div>
       )}
     </>
